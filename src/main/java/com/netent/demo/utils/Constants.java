@@ -6,7 +6,7 @@ public class Constants {
   public static final String PING = "/ping";
   public static final String ADD = "/book";
   public static final String SEARCH = "/book";
-  public static final String BUY = "/buy/book";
+  public static final String BUY = "/book/orderRequest";
   public static final String MEDIA_POSTS = "/mediaposts";
 
 

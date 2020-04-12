@@ -72,9 +72,9 @@ public class BooStoreUnitTests {
     BookReq bookReq = new BookReq("123456", "Shiva Triology", "Siva", 100.0, 2);
     try {
       BookResponse bookResponse = bookService.processBookRequest(bookReq);
-      bookId = bookResponse.getBookId();
+      bookId = bookResponse.getBook_id();
       isbn = bookReq.getIsbn();
-      BookEntity bookEntity = bookRepoService.getBookById(bookResponse.getBookId());
+      BookEntity bookEntity = bookRepoService.getBookById(bookResponse.getBook_id());
       Assert.assertEquals(bookReq.getAuthor(), bookEntity.getAuthor());
     } catch (CreateBookException e2) {
       e2.printStackTrace();
@@ -88,7 +88,7 @@ public class BooStoreUnitTests {
     BookReq bookReq = new BookReq("123456", "Shiva Triology", "Siva", 100.0, 2);
     try {
       BookResponse bookResponse = bookService.processBookRequest(bookReq);
-      Assert.assertEquals(bookId, bookResponse.getBookId());
+      Assert.assertEquals(bookId, bookResponse.getBook_id());
       BookInventory bookInventory = bookInventoryRepoService.getById(bookId);
       Assert.assertEquals(4, bookInventory.getQuantity());
 

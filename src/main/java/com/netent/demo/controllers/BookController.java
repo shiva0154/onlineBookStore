@@ -83,7 +83,7 @@ public class BookController {
       List<String> response = mediaService.getMediaPostsByIsbn(isbn);
       return ServiceResponse.getMediaResponse(response);
     } catch (NoSuchBookFoundException e) {
-      return ServiceResponse.getFailureResponse(ErrorCodes.ERR_1002);
+      return ServiceResponse.getFailureResponse(ErrorCodes.ERR_1007);
     } catch (NoMediaPostMatchWithIsbnException e) {
       return ServiceResponse.getFailureResponse(ErrorCodes.ERR_1005);
     } catch (UnableToProcessQueryException e) {

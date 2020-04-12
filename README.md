@@ -47,7 +47,7 @@ platform : Docker
 Request URL: 
 
 ```
-curl --location --request GET 'http://<service_url>/v1/book_store/search/book' \
+curl --location --request GET 'http://<service_url>/v1/book_store/book' \
 '{
 	"author": "",
 	"title" : "".
@@ -140,7 +140,7 @@ if there is a book match with the information, quantity will get updated in the 
 Request:
 
 ```
-curl --location --request POST 'http://<service_url>/v1/book_store/buy/book' \
+curl --location --request POST 'http://<service_url>/v1/book_store/book/orderRequest' \
 --data-raw '{
 	
 	"bookId" : "5ea6db17-d22f-446b-b60f-dda122137233",
@@ -189,12 +189,8 @@ curl --location --request POST 'http://<service_url>/v1/book_store/buy/book' \
 
 Request:
 ```
-curl --location --request GET 'http://<service_url>/v1/book_store/Media?title=sunt%20aut%20facere%20repellat' \
---data-raw '{
-
-    "isbn":<String>
- 
-  }'
+curl --location --request GET 'http://localhost:80/v1/book_store/mediaposts?isbn=1234569' \
+--data-raw ''
 ```
 
 ##### Response:
@@ -219,6 +215,21 @@ curl --location --request GET 'http://<service_url>/v1/book_store/Media?title=su
   message: <String>
 }
 ```
+
+
+### Run commands:
+
+##### Github
+run mvn clean install
+
+##### Docker
+```
+docker pull docker pull shiva0154/online_bookstore
+docker run docker run -p 80:80 <docker_id>
+```
+
+
+
 
 
 
