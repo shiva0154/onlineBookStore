@@ -14,7 +14,7 @@
 ![Imgur](https://i.imgur.com/BdECT0Z.png)
 
 
-### Step 3: Design core components
+### Design core components
 
 
 #### Storage:
@@ -224,8 +224,8 @@ run mvn clean install
 
 ##### Docker
 ```
-docker pull docker pull shiva0154/online_bookstore
-docker run docker run -p 80:80 <docker_id>
+docker pull shiva0154/online_bookstore
+docker run -p 80:80 <docker_id>
 ```
 
 
