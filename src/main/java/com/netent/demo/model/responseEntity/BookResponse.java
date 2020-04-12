@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class BookResponse {
 
-  private String bookId;
+  private String book_id;
 
   public BookResponse(String bookId) {
-    this.bookId = bookId;
+    this.book_id = bookId;
   }
 }

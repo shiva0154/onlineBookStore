@@ -33,7 +33,7 @@ public class ServiceResponse<T> extends ResponseEntity<T> {
   {
     ObjectNode objectNode = objectMapper.createObjectNode();
     objectNode.put("status","Success");
-    objectNode.put("book_id", bookResponse.getBookId());
+    objectNode.put("book_id", bookResponse.getBook_id());
     return new ServiceResponse<>(objectNode, HttpStatus.OK);
   }
 

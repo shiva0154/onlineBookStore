@@ -76,9 +76,9 @@ curl --location --request GET 'http://<service_url>/v1/book_store/search/book' \
 
 ```
 {
-    status : "Failure"
-    errorCode : <String>
-    errorMessage: <String>
+      status: "Failure",
+      error_code: <String>,
+      message: <String>
     
 }
 ```
@@ -111,16 +111,16 @@ curl --location --request POST 'http://<service_url>/v1/book_store/book' \
 ```
 {
   status: "Success",
-  bookId : <String> 
+  book_id : <String> 
 }
 ```
 
 ###### Failure:
 ```
 { 
-  status: "Failure",
-  errorCode: <String>,
-  errorMessage: <String>
+    status: "Failure",
+    error_code: <String>,
+    message: <String>
 }
 ```
 
@@ -174,9 +174,9 @@ curl --location --request POST 'http://<service_url>/v1/book_store/buy/book' \
 
 ```
 {
-  status: "Failure",
-  error_code: <String>,
-  error_message: <String>
+    status: "Failure",
+    error_code: <String>,
+    message: <String>
 }
 ```
 
@@ -204,11 +204,10 @@ curl --location --request GET 'http://<service_url>/v1/book_store/Media?title=su
 ```
 {
     status: "Success",
-    book_id: {
-    <book_id1>,
-    ...
-    <book_idn>
-    }
+    book_ids: [
+    <String-1>,
+    <String-2>
+    ]
 }
 ```
 
@@ -217,7 +216,7 @@ curl --location --request GET 'http://<service_url>/v1/book_store/Media?title=su
 {
   status: "Failure",
   error_code: <String>,
-  error_message: <String>
+  message: <String>
 }
 ```
 
