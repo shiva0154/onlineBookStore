@@ -58,19 +58,19 @@ public class MediaService implements MediaServiceInterface {
       throws NoSuchBookFoundException, NoMediaPostMatchWithIsbnException,
       UnableToProcessQueryException {
 
-    return findByTitle(bookRepoService.getBookByIsbn(isbn).getTitle());
+    return getPostsByTitle(bookRepoService.getBookByIsbn(isbn).getTitle());
   }
 
-  private List<String> findByTitle(String query)
+  private List<String> getPostsByTitle(String bookTitle)
       throws NoMediaPostMatchWithIsbnException, UnableToProcessQueryException {
-    query = query.toLowerCase();
-    BoolQueryBuilder finalQuery = QueryBuilders.boolQuery();
-    QueryBuilder locationMatch = QueryBuilders
-        .multiMatchQuery(query, Constants.MEDIA_TITLE, Constants.MEDIA_BODY)
+    bookTitle = bookTitle.toLowerCase();
+    BoolQueryBuilder query = QueryBuilders.boolQuery();
+    QueryBuilder queryBuilder = QueryBuilders
+        .multiMatchQuery(bookTitle, Constants.MEDIA_TITLE, Constants.MEDIA_BODY)
         .type(MatchQuery.Type.PHRASE_PREFIX);
 
-    finalQuery.filter(locationMatch);
-    SearchResult result = getSearchResultFromES(finalQuery);
+    query.filter(queryBuilder);
+    SearchResult result = getSearchResultFromES(query);
     List<String> title = processSearchResult(result);
     if (title.isEmpty()) {
       throw new NoMediaPostMatchWithIsbnException();
@@ -110,30 +110,29 @@ public class MediaService implements MediaServiceInterface {
   }
 
   @Scheduled(fixedDelay = 10000000)
-  private void getUpdateOfPostFromThirdParty() {
-    System.out.println("Scheduled at " + System.currentTimeMillis());
-
+  private void updateMediaPosts() {
+    //System.out.println("Scheduled at " + System.currentTimeMillis());
     UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(mediaUrl);
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(new MediaType("application", "json"));
-    HttpEntity<String> entity = new HttpEntity<String>(headers);
+    HttpEntity<String> entity = new HttpEntity<>(headers);
 
     try {
-      ResponseEntity<List<MediaPostEntity>> rateResponse =
+      ResponseEntity<List<MediaPostEntity>> responseEntity =
           restTemplate().exchange(builder.build().toUriString(), HttpMethod.GET, entity,
               new ParameterizedTypeReference<List<MediaPostEntity>>() {
               });
-      List<MediaPostEntity> posts = rateResponse.getBody();
+      List<MediaPostEntity> mediaPostEntities = responseEntity.getBody();
 
-      for (MediaPostEntity post : posts) {
-        save(post);
+      for (MediaPostEntity mediaPostEntity : mediaPostEntities) {
+        saveToElasticSearch(mediaPostEntity);
       }
     } catch (Exception e) {
-
+        //ToDO: Log the exception
     }
   }
 
-  private void save(MediaPostEntity mediaPostEntity) throws ElasticSearchFailure, IOException {
+  private void saveToElasticSearch(MediaPostEntity mediaPostEntity) throws ElasticSearchFailure, IOException {
     JestResult result = null;
     Index index = new Index.Builder(mediaPostEntity)
         .index(Constants.ES_INDEX)
@@ -158,7 +157,7 @@ public class MediaService implements MediaServiceInterface {
    */
   public void addMediaPosts(MediaPostEntity mediaPostEntity) throws ElasticSearchFailure,IOException
   {
-    save(mediaPostEntity);
+    saveToElasticSearch(mediaPostEntity);
   }
 
 
