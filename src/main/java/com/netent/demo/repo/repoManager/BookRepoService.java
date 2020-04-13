@@ -24,8 +24,8 @@ public class BookRepoService {
   @Autowired
   private MongoUtil mongoUtil;
 
-  public void createBook(BookEntity bookEntity) {
-    mongoUtil.insert(bookEntity);
+  public void createBook(BookEntity bookEntity){
+      bookRepo.save(bookEntity);
   }
 
   public BookEntity getBookById(String id) {

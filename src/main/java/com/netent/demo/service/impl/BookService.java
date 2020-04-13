@@ -20,6 +20,7 @@ import com.netent.demo.service.BookServiceInterface;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 
@@ -40,7 +41,7 @@ public class BookService implements BookServiceInterface {
 
 
   @Override
-  public BookResponse processBookRequest(BookReq request) throws CreateBookException {
+  public BookResponse processBookRequest(BookReq request) throws DuplicateKeyException,CreateBookException {
 
     try {
       String bookId = bookRepoService.getBookByParams(request);
@@ -55,7 +56,11 @@ public class BookService implements BookServiceInterface {
         updateBookInventory(bookId, request.getQuantity(), true);
         updatePriceInventory(bookId, request.getPrice(), true);
         return new BookResponse(bookId);
-      } catch (Exception e3) {
+      }catch (DuplicateKeyException e2)
+      {
+        throw e2;
+      }
+      catch (Exception e3) {
         throw new CreateBookException();
       }
     }
@@ -71,7 +76,7 @@ public class BookService implements BookServiceInterface {
    return response;
   }
 
-  private String addBookToStore(BookReq request) {
+  private String addBookToStore(BookReq request)  {
     BookEntity bookEntity = new BookEntity(request);
     bookRepoService.createBook(bookEntity);
     return bookEntity.getBookId();

@@ -8,7 +8,8 @@ public enum ErrorCodes {
   ERR_1004("Unable to process the Order. Please try again"),
   ERR_1005("No Posts present with this ISBN"),
   ERR_1006("Unable to process the query"),
-  ERR_1007("No Book Found with the given ISBN");
+  ERR_1007("No Book Found with the given ISBN"),
+  ERR_1008("ISBN already existing. Please try again");
 
   String text;
 

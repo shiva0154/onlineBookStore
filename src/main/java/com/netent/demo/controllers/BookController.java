@@ -22,6 +22,7 @@ import com.netent.demo.utils.ServiceResponse;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,7 +58,10 @@ public class BookController {
     try {
       BookResponse response = bookService.processBookRequest(req);
       return ServiceResponse.getAddBookResponse(response);
-    } catch (Exception e) {
+    } catch (DuplicateKeyException e1){
+      return ServiceResponse.getFailureResponse(ErrorCodes.ERR_1008);
+    }
+    catch (Exception e2) {
       return ServiceResponse.getFailureResponse(ErrorCodes.ERR_1001);
     }
   }

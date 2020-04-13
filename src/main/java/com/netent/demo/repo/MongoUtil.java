@@ -1,6 +1,7 @@
 package com.netent.demo.repo;
 
 
+
 import com.netent.demo.Exceptions.InSufficientQuantityException;
 import com.netent.demo.Exceptions.NoEntryFoundException;
 import com.netent.demo.Exceptions.QueryException;
@@ -29,14 +30,6 @@ public class MongoUtil {
     }
   }
 
-
-  public <T> void insert(T entity) {
-    try {
-      mongoTemplate.save(entity);
-    } catch (Exception e) {
-
-    }
-  }
 
   public <T> void findAndUpdate(Query query, Update update, Class<T> entityClass)
       throws InSufficientQuantityException {
