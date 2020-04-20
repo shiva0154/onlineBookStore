@@ -94,7 +94,7 @@ User can search books with any of the field author/title/isbn. The search query 
 Request: 
 
 ```
-curl --location --request POST 'http://<service_url>/v1/book_store/book' \
+curl --location --request PUT 'http://<service_url>/v1/book_store/book' \
 --data-raw '{
 	"isbn":"123456",
 	"title":"OS",

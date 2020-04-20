@@ -53,7 +53,7 @@ public class BookController {
   }
 
 
-  @RequestMapping(value = Constants.ADD, method = RequestMethod.POST)
+  @RequestMapping(value = Constants.ADD, method = RequestMethod.PUT)
   public ServiceResponse<JsonNode> addBook(@Valid @RequestBody BookReq req) {
     try {
       BookResponse response = bookService.processBookRequest(req);
